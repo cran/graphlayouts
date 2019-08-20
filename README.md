@@ -13,11 +13,13 @@ status](https://www.r-pkg.org/badges/version/graphlayouts)](https://cran.r-proje
 [![Downloads](https://cranlogs.r-pkg.org/badges/graphlayouts)](https://CRAN.R-project.org/package=graphlayouts)
 
 This package implements some graph layout algorithms that are not
-available in `igraph`. See my [blog
-post](http://blog.schochastics.net/post/stress-based-graph-layouts/) for
-an introduction on stress majorization.
+available in `igraph`.
 
-So far, the package implements four algorithms:
+**A detailed introductory tutorial for graphlayouts and ggraph can be
+found [here](http://mr.schochastics.net/netVizR.html).** (version
+0.2.0/ggraph 1.0.2)
+
+So far, the package implements the following algorithms:
 
   - Stress majorization
     ([Paper](https://graphviz.gitlab.io/_pages/Documentation/GKN04.pdf))
@@ -25,6 +27,11 @@ So far, the package implements four algorithms:
     ([Paper](http://jgaa.info/accepted/2015/NocajOrtmannBrandes2015.19.2.pdf))
   - flexible radial layouts
     ([Paper](http://jgaa.info/accepted/2011/BrandesPich2011.15.1.pdf))
+  - sparse stress ([Paper](https://arxiv.org/abs/1608.08909))
+  - pivot MDS
+    ([Paper](https://kops.uni-konstanz.de/bitstream/handle/123456789/5741/bp_empmdsld_06.pdf?sequence=1&isAllowed=y))
+  - dynamic layout for longitudinal data
+    ([Paper](https://kops.uni-konstanz.de/bitstream/handle/123456789/20924/Brandes_209246.pdf?sequence=2))
   - spectral layouts
 
 ## Install
@@ -50,7 +57,7 @@ library(graphlayouts)
 set.seed(666)
 pa <- sample_pa(1000,1,1,directed = F)
 
-ggraph(pa)+
+ggraph(pa,layout = "nicely")+
   geom_edge_link(width=0.2,colour="grey")+
   geom_node_point(col="black",size=0.3)+
   theme_graph()
@@ -67,14 +74,6 @@ ggraph(pa,layout="stress")+
 ```
 
 <img src="man/figures/README-example-2.png" width="80%" style="display: block; margin: auto;" />
-
-## Layout manipulation
-
-The functions `layout_mirror()` and `layout_rotate()` can be used to
-manipulate an existing
-layout
-
-<img src="man/figures/layout_manipulation.png" width="80%" style="display: block; margin: auto;" />
 
 ## Stress Majorization: Unconnected Network
 
@@ -94,7 +93,7 @@ g <- disjoint_union(
   sample_pa(80,directed = F)
 )
 
-ggraph(g) +
+ggraph(g,layout = "nicely") +
   geom_edge_link() +
   geom_node_point() +
   theme_graph()
@@ -104,7 +103,7 @@ ggraph(g) +
 
 ``` r
 
-ggraph(g, layout="stress") +
+ggraph(g, layout = "stress",bbox = 40) +
   geom_edge_link() +
   geom_node_point() +
   theme_graph()
@@ -123,7 +122,7 @@ g <- sample_islands(9,40,0.4,15)
 g <- simplify(g)
 V(g)$grp <- as.character(rep(1:9,each=40))
 
-ggraph(g,layout="stress")+
+ggraph(g,layout = "stress")+
   geom_edge_link(colour=rgb(0,0,0,0.5),width=0.1)+
   geom_node_point(aes(col=grp))+
   scale_color_brewer(palette = "Set1")+
@@ -142,7 +141,7 @@ bb <- layout_as_backbone(g,keep=0.4)
 E(g)$col <- F
 E(g)$col[bb$backbone] <- T
 
-ggraph(g,layout="manual",node.positions=data.frame(x=bb$xy[,1],y=bb$xy[,2]))+
+ggraph(g,layout="manual",x=bb$xy[,1],y=bb$xy[,2])+
   geom_edge_link(aes(col=col),width=0.1)+
   geom_node_point(aes(col=grp))+
   scale_color_brewer(palette = "Set1")+
@@ -155,16 +154,16 @@ ggraph(g,layout="manual",node.positions=data.frame(x=bb$xy[,1],y=bb$xy[,2]))+
 
 ## Radial Layout with Focal Node
 
-The function `layout_with_focus` creates a radial layout around a focal
-node. All nodes with the same distance from the focal node are on the
-same circle.
+The function `layout_with_focus()` creates a radial layout around a
+focal node. All nodes with the same distance from the focal node are on
+the same circle.
 
 ``` r
 library(igraphdata)
 library(patchwork)
 data("karate")
 
-p1 <- ggraph(karate,layout = "focus",v = 1) +
+p1 <- ggraph(karate,layout = "focus",focus = 1) +
   draw_circle(use = "focus",max.circle = 3)+
   geom_edge_link(edge_color="black",edge_width=0.3)+
   geom_node_point(aes(fill=as.factor(Faction)),size=2,shape=21)+
@@ -174,7 +173,7 @@ p1 <- ggraph(karate,layout = "focus",v = 1) +
   coord_fixed()+
   labs(title= "Focus on Mr. Hi")
 
-p2 <- ggraph(karate,layout = "focus",v = 34) +
+p2 <- ggraph(karate,layout = "focus",focus = 34) +
   draw_circle(use = "focus",max.circle = 4)+
   geom_edge_link(edge_color="black",edge_width=0.3)+
   geom_node_point(aes(fill=as.factor(Faction)),size=2,shape=21)+
@@ -196,9 +195,12 @@ node with the highest centrality value. The further outside a node is,
 the more peripheral it is.
 
 ``` r
+library(igraphdata)
+library(patchwork)
+data("karate")
 
 bc <- betweenness(karate)
-p1 <- ggraph(karate,layout = "centrality", cent = bc, tseq = seq(0,1,0.15)) +
+p1 <- ggraph(karate,layout = "centrality", centrality = bc, tseq = seq(0,1,0.15)) +
   draw_circle(use = "cent") +
   annotate_circle(bc,format="",pos="bottom") +
   geom_edge_link(edge_color="black",edge_width=0.3)+
@@ -211,7 +213,7 @@ p1 <- ggraph(karate,layout = "centrality", cent = bc, tseq = seq(0,1,0.15)) +
 
 
 cc <- closeness(karate)
-p2 <- ggraph(karate,layout = "centrality", cent = cc, tseq = seq(0,1,0.2)) +
+p2 <- ggraph(karate,layout = "centrality", centrality = cc, tseq = seq(0,1,0.2)) +
   draw_circle(use = "cent") +
   annotate_circle(cc,format="scientific",pos="bottom") +
   geom_edge_link(edge_color="black",edge_width=0.3)+
@@ -226,3 +228,69 @@ p1+p2
 ```
 
 <img src="man/figures/README-flex_cent-1.png" width="80%" style="display: block; margin: auto;" />
+
+## Large graphs
+
+`graphlayouts` implements two algorithms for visualizing large networks
+(\<100k nodes). `layout_with_pmds()` is similar to `layout_with_mds()`
+but performs the multidimensional scaling only with a small number of
+pivot nodes. Usually, 50-100 are enough to obtain similar results to the
+full MDS.
+
+`layout_with_sparse_stress()` performs stress majorization only with a
+small number of pivots (~50-100). The runtime performance is inferior to
+pivotMDS but the quality is far superior.
+
+A comparison of runtimes and layout quality can be found in the
+[wiki](https://github.com/schochastics/graphlayouts/wiki/)  
+**tl;dr**: both layout algorithms appear to be faster than the fastest
+igraph algorithm `layout_with_drl()`.
+
+Below are two examples of layouts generated for large graphs using
+`layout_with_sparse_stress()`
+
+<img src="man/figures/rt-net.png" width="80%" style="display: block; margin: auto;" />
+A retweet network with ~18k nodes and ~61k edges (runtime:
+45.2s)
+
+<img src="https://user-images.githubusercontent.com/17147355/62534862-ea039880-b841-11e9-87db-6ee69ebacf94.png" width="80%" style="display: block; margin: auto;" />
+A co-citation network with ~12k nodes and ~68k edges (runtime: 21s)
+
+## dynamic layouts
+
+`layout_as_dynamic()` allows you to visualize snapshots of longitudinal
+network data. Nodes are anchored with a reference layout and only moved
+slightly in each wave depending on deleted/added edges. In this way, it
+is easy to track down specific nodes throughout time. Use `patchwork` to
+put the individual plots next to each other.
+
+``` r
+library(patchwork)
+#gList is a list of longitudinal networks.
+
+xy <- layout_as_dynamic(gList,alpha = 0.2)
+pList <- vector("list",length(gList))
+
+for(i in 1:length(gList)){
+  pList[[i]] <- ggraph(gList[[i]],layout="manual",x=xy[[i]][,1],y=xy[[i]][,2])+
+    geom_edge_link0(edge_width=0.6,edge_colour="grey66")+
+    geom_node_point(shape=21,aes(fill=smoking),size=3)+
+    geom_node_text(aes(label=1:50),repel = T)+
+    scale_fill_manual(values=c("forestgreen","grey25","firebrick"),guide=ifelse(i!=2,FALSE,"legend"))+
+    theme_graph()+
+    theme(legend.position="bottom")+
+    labs(title=paste0("Wave ",i))
+}
+Reduce("+",pList)+
+  plot_annotation(title="Friendship network",theme = theme(title = element_text(family="Arial Narrow",face = "bold",size=16)))
+```
+
+<img src="man/figures/dynamic_ex.png" width="80%" style="display: block; margin: auto;" />
+
+## Layout manipulation
+
+The functions `layout_mirror()` and `layout_rotate()` can be used to
+manipulate an existing
+layout
+
+<img src="man/figures/layout_manipulation.png" width="80%" style="display: block; margin: auto;" />
