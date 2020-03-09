@@ -4,6 +4,7 @@
 #' @description similar to \link[igraph]{layout_with_mds} but uses only a small set of pivots for MDS. Considerably faster than MDS and thus applicable for larger graphs.
 #' @param g igraph object
 #' @param pivots number of pivots
+#' @param D precomputed distances from pivots to all nodes (if available, default: NULL)
 #' @param weights possibly a numeric vector with edge weights. If this is NULL and the graph has a weight edge attribute, then the attribute is used. If this is NA then no weights are used (even if the graph has a weight attribute). By default, weights are ignored. See details for more.
 #' @details Be careful when using weights. In most cases, the inverse of the edge weights should be used to ensure that the endpoints of an edges with higher weights are closer together (weights=1/E(g)$weight)
 #'
@@ -22,18 +23,22 @@
 #' xy <- layout_with_pmds(g,pivots = 100)
 #' }
 #' @export
-layout_with_pmds <- function(g,pivots,weights=NA){
+layout_with_pmds <- function(g,pivots,weights=NA,D=NULL){
   if (!igraph::is_igraph(g)) {
     stop("Not a graph object")
   }
-  if(is.null(pivots)){
+  if(missing(pivots) & is.null(D)){
     stop('argument "pivots" is missing, with no default.')
   }
-  if(pivots>igraph::vcount(g)){
-    stop('"pivots" must be less than the number of nodes in the graph.')
+  if(!missing(pivots)){
+    if(pivots>igraph::vcount(g)){
+      stop('"pivots" must be less than the number of nodes in the graph.')
+    }
   }
-  pivs <- sample(1:igraph::vcount(g),pivots)
-  D <- igraph::distances(g,to=pivs,weights = weights)
+  if(is.null(D)){
+    pivs <- sample(1:igraph::vcount(g),pivots)
+    D <- t(igraph::distances(g,v=pivs,weights = weights))
+  }
   cmean <- colMeans(D^2)
   rmean <- rowMeans(D^2)
   Dmat <- D^2-outer(rmean,cmean, function(x,y) x+y)+mean(D^2)
@@ -56,7 +61,7 @@ layout_with_pmds <- function(g,pivots,weights=NA){
 #' 'ggraph' natively supports the layout.
 #' @author David Schoch
 #' @return matrix of xy coordinates
-#' @references Ortmann, M. and Klimenta, M. and Brandes, U. (2016).A Sparse Stress Model. https://arxiv.org/pdf/1608.08909.pdf
+#' @references Ortmann, M. and Klimenta, M. and Brandes, U. (2016). A Sparse Stress Model. https://arxiv.org/pdf/1608.08909.pdf
 #' @examples
 #' \dontrun{
 #' library(igraph)
@@ -89,9 +94,9 @@ layout_with_sparse_stress <- function(g,pivots,weights=NA,iter=500){
   }
   pivs <- sample(1:igraph::vcount(g),pivots)
 
-  D <- igraph::distances(g,to=pivs,weights = NA)
+  D <- t(igraph::distances(g,v=pivs,weights = NA))
   Rp <- apply(D,1,which.min)
-  y <- layout_with_pmds(g,pivots,weights = NA)
+  y <- layout_with_pmds(g,pivots,D = D,weights = NA)
 
   #rescale
   el <- igraph::get.edgelist(g,names = FALSE)

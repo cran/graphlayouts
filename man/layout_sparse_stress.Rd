@@ -8,8 +8,7 @@
 \usage{
 layout_with_sparse_stress(g, pivots, weights = NA, iter = 500)
 
-layout_igraph_sparse_stress(g, pivots, weights = NA, iter = 500,
-  circular)
+layout_igraph_sparse_stress(g, pivots, weights = NA, iter = 500, circular)
 }
 \arguments{
 \item{g}{igraph object}
@@ -46,7 +45,7 @@ ggraph(g,layout = "sparse_stress",pivots = 100)+
 }
 }
 \references{
-Ortmann, M. and Klimenta, M. and Brandes, U. (2016).A Sparse Stress Model. https://arxiv.org/pdf/1608.08909.pdf
+Ortmann, M. and Klimenta, M. and Brandes, U. (2016). A Sparse Stress Model. https://arxiv.org/pdf/1608.08909.pdf
 }
 \author{
 David Schoch

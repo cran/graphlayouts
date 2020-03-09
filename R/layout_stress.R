@@ -1,4 +1,4 @@
-#' stress majorization graph layout
+#' stress majorization layout
 #'
 #' @name layout_stress
 #' @rdname layout_stress
@@ -22,7 +22,7 @@
 #'
 #' g <- sample_pa(100,1,1,directed = FALSE)
 #'
-#' # calculate layout manualy
+#' # calculate layout manually
 #' xy <- layout_with_stress(g)
 #'
 #' # use it with ggraph
@@ -37,6 +37,9 @@ layout_with_stress <- function(g,weights = NA, iter = 500,tol = 0.0001,mds = TRU
   if (!igraph::is_igraph(g)) {
     stop("Not a graph object")
   }
+
+  set.seed(42)  #stress is deterministic and produces same result up to translation. This keeps the layout fixed
+
   comps <- igraph::components(g,"weak")
   if(comps$no>1){
     lg <- list()
@@ -61,7 +64,11 @@ layout_with_stress <- function(g,weights = NA, iter = 500,tol = 0.0001,mds = TRU
         xinit <- matrix(stats::runif(n*2,0,1),n,2)
       } else{
         rmat <- matrix(stats::runif(n*2,-0.1,0.1),n,2)
-        xinit <- igraph::layout_with_mds(sg) + rmat
+        if(igraph::vcount(sg)<=100){
+          xinit <- igraph::layout_with_mds(sg) + rmat
+        } else{
+          xinit <- layout_with_pmds(sg,D = D[,sample(1:igraph::vcount(sg),100)]) + rmat
+        }
       }
       lg[[i]] <- stress_major(xinit,W,D,iter,tol)
     }
@@ -95,7 +102,12 @@ layout_with_stress <- function(g,weights = NA, iter = 500,tol = 0.0001,mds = TRU
         xinit <- matrix(stats::runif(n*2,0,1),n,2)
       } else{
         rmat <- matrix(stats::runif(n*2,-0.1,0.1),n,2)
-        xinit <- igraph::layout_with_mds(g) + rmat
+        if(igraph::vcount(g)<=100){
+          xinit <- igraph::layout_with_mds(g) + rmat
+        } else{
+          xinit <- layout_with_pmds(g,D = D[,sample(1:(igraph::vcount(g)),100)]) + rmat
+        }
+
       }
       x <- stress_major(xinit,W,D,iter,tol)
     }
@@ -142,6 +154,8 @@ layout_with_focus <- function(g,v,weights = NA,iter = 500,tol = 0.0001){
   if(comps$no>1){
     stop("g must be a connected graph.")
   }
+  set.seed(42)  #stress is deterministic and produces same result up to translation. This keeps the layout fixed
+
   n <- igraph::vcount(g)
   D <- igraph::distances(g,weights = weights)
   W <- 1/D^2
@@ -209,6 +223,7 @@ layout_with_centrality <- function(g,cent,scale = TRUE,iter = 500,tol = 0.0001,t
   if(comps$no>1){
     stop("g must be connected")
   }
+  set.seed(42)  #stress is deterministic and produces same result up to translation. This keeps the layout fixed
   n <- igraph::vcount(g)
   if(scale){
     cent <- scale_to_100(cent)
@@ -239,6 +254,69 @@ layout_with_centrality <- function(g,cent,scale = TRUE,iter = 500,tol = 0.0001,t
     angles <- apply(x,1,function(y) atan2(y[2],y[1]))
     x <- cbind(radii_new*cos(angles),radii_new*sin(angles))
     }
+  x
+}
+
+#------------------------------------------------------------------------------#
+# constrained stress ----
+#------------------------------------------------------------------------------#
+#' constrained stress layout
+#'
+#' @name layout_constrained_stress
+#' @description force-directed graph layout based on stress majorization with variable constrained
+#' @param g igraph object
+#' @param coord numeric vector. fixed coordinates for dimension specified in `fixdim`.
+#' @param fixdim string. which dimension should be fixed. Either "x" or "y".
+#' @param weights possibly a numeric vector with edge weights. If this is NULL and the graph has a weight edge attribute, then the attribute is used. If this is NA then no weights are used (even if the graph has a weight attribute). By default, weights are ignored. See details for more.
+#' @param iter number of iterations during stress optimization
+#' @param tol stopping criterion for stress optimization
+#' @param mds should an MDS layout be used as initial layout (default: TRUE)
+#' @param bbox constrain dimension of output. Only relevant to determine the placement of disconnected graphs
+#' @details Be careful when using weights. In most cases, the inverse of the edge weights should be used to ensure that the endpoints of an edges with higher weights are closer together (weights=1/E(g)$weight).
+#'
+#' The layout_igraph_* function should not be used directly. It is only used as an argument for plotting with 'igraph'.
+#' 'ggraph' natively supports the layout.
+#' @return matrix of xy coordinates
+#' @references Gansner, E. R., Koren, Y., & North, S. (2004). Graph drawing by stress majorization. *In International Symposium on Graph Drawing* (pp. 239-250). Springer, Berlin, Heidelberg.
+#' @export
+layout_with_constrained_stress <- function(g,coord,fixdim="x",weights = NA,
+                                           iter = 500,tol = 0.0001,mds = TRUE,bbox = 30){
+  if (!igraph::is_igraph(g)) {
+    stop("Not a graph object")
+  }
+  set.seed(42)  #stress is deterministic and produces same result up to translation. This keeps the layout fixed
+  fixdim <- match.arg(fixdim,c("x","y"))
+  fixdim <- ifelse(fixdim=="x",1,2)
+
+  if(missing(coord)){
+    stop('"coord" is missing with no default.')
+  }
+  comps <- igraph::components(g,"weak")
+  if(comps$no>1){
+    stop('g must be connected')
+  }
+
+  if(igraph::vcount(g)==1){
+    x <- matrix(c(0,0),1,2)
+  } else{
+    D <- igraph::distances(g,weights = weights)
+    W <- 1/D^2
+    diag(W) <- 0
+    n <- igraph::vcount(g)
+    if(!mds){
+      xinit <- matrix(stats::runif(n*2,0,1),n,2)
+      xinit[,fixdim] <- coord
+    } else{
+      rmat <- matrix(stats::runif(n*2,-0.1,0.1),n,2)
+      if(igraph::vcount(g)<=100){
+        xinit <- igraph::layout_with_mds(g) + rmat
+      } else{
+        xinit <- layout_with_pmds(g,D = D[,sample(1:(igraph::vcount(g)),100)]) + rmat
+      }
+      xinit[,fixdim] <- coord
+    }
+    x <- constrained_stress_major(xinit,fixdim,W,D,iter,tol)
+  }
   x
 }
 
