@@ -1,6 +1,6 @@
 Package: graphlayouts
 Title: Additional Layout Algorithms for Network Visualizations
-Version: 0.7.1
+Version: 0.7.2
 Authors@R: person("David", "Schoch", email = "david.schoch@manchester.ac.uk", role = c("aut", "cre"))
 Maintainer: David Schoch <david.schoch@manchester.ac.uk>
 Description: Several new layout algorithms to visualize networks are provided which are not part of 'igraph'. 
@@ -16,9 +16,9 @@ LazyData: true
 Imports: igraph, Rcpp
 Suggests: oaqc, testthat, ggraph, ggplot2, knitr, rmarkdown
 LinkingTo: Rcpp, RcppArmadillo
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.2
 NeedsCompilation: yes
-Packaged: 2020-10-26 15:17:50 UTC; david
+Packaged: 2021-11-21 06:27:18 UTC; david
 Author: David Schoch [aut, cre]
 Repository: CRAN
-Date/Publication: 2020-10-26 15:50:02 UTC
+Date/Publication: 2021-11-21 06:50:02 UTC
