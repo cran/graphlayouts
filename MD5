@@ -1,7 +1,7 @@
-b30515ad6e6a9542616f75d9f75a1117 *DESCRIPTION
+53895bcac5bc033a84623e245fc29462 *DESCRIPTION
 e7169b5a4594da18e5ad9ba2db89154d *LICENSE
-66d29b46f45e4e34bada9b5ae2e3923d *NAMESPACE
-c0b2c30e3f4473660ddf92a341e0e4e6 *NEWS.md
+2681abdfa295f671828c472d68caa80e *NAMESPACE
+81ec35d14cf33df290e71fbe22bd7e43 *NEWS.md
 fb3f23e8ab6a3a087c76cbae1ffdeaa2 *R/RcppExports.R
 4340988f85b45fef4a15d7b4599b04ed *R/annotate_functions.R
 1eb6ba511919d8525d3d790950422c5d *R/data-examples.R
@@ -14,8 +14,9 @@ a066416274980316e90d81024abec853 *R/layout_manipulate.R
 1ee54eb0789a4c9ef1ec484cd0071983 *R/layout_multilevel.R
 272ae1a4ed03aa629e951b9e816daf2a *R/layout_spectral.R
 9f4d786d187c368cee04c1f00f7ebce3 *R/layout_stress.R
-0f607da6eb0c6d23ba08c4dfb6064732 *R/layouts.R
-ff62e7588f62ceb5701cbc38eaa6fb5a *README.md
+b0ae3589912bf55181e9c3f506983e1f *R/layout_umap.R
+38611f242af7097b207641117c0c2e28 *R/layouts.R
+76e20cab7a774b65377846daad5511ed *README.md
 63d1a66bf223160d05eb5439f7eab2e6 *data/multilvl_ex.rda
 52d108a6c74855ae14726ae756b43716 *man/annotate_circle.Rd
 08e97b56eb291c26ca2e7fb8bff34899 *man/draw_circle.Rd
@@ -24,7 +25,7 @@ ff62e7588f62ceb5701cbc38eaa6fb5a *README.md
 21dcf02c1cfbd0abaa9c4b89d9b5a29d *man/figures/README-example-2.png
 c5577a8330810c7783e8695e761bf205 *man/figures/README-example_un-1.png
 ed8ed940ec45dc1b372ed673fc9200c8 *man/figures/README-example_un-2.png
-cea22b517dc387957aea86266a9e2a9b *man/figures/README-flex_cent-1.png
+3e12c4a4163694e5ab341dd133c25103 *man/figures/README-flex_cent-1.png
 cfee8ef22408ab059b07d90925819720 *man/figures/README-flex_focus-1.png
 beaf4cb4a8340c97a3c542b4087e438e *man/figures/README-hairball-1.png
 4d766352ff430e5d09afbf03ebbf9e03 *man/figures/dynamic_ex.png
@@ -46,6 +47,7 @@ b26fd7bee7903c410e582316d1cba4e2 *man/layout_sparse_stress.Rd
 9cda046153affe1544a06d08e83d4e97 *man/layout_spectral.Rd
 7f48907a378be31c27289ec5e2b36913 *man/layout_stress.Rd
 3e21acd9e027027e59d3f99518b4ed4c *man/layout_stress3D.Rd
+c4ab4ffa701784ef695e9b65d7f9169b *man/layout_umap.Rd
 ed4140bb713a98f3e66c087ddbd65feb *man/multilvl_ex.Rd
 266bf046cfbd29ff400223fe76344e69 *src/RcppExports.cpp
 d83030586ad2c528cabc9d0c4bea6135 *src/constrained_stress.cpp
