@@ -1,13 +1,13 @@
-53895bcac5bc033a84623e245fc29462 *DESCRIPTION
+640357b2db0ff6248a9bc9fb894e036b *DESCRIPTION
 e7169b5a4594da18e5ad9ba2db89154d *LICENSE
 2681abdfa295f671828c472d68caa80e *NAMESPACE
-81ec35d14cf33df290e71fbe22bd7e43 *NEWS.md
+f2f5ec9f36b27fe4f6cbc0ac52220830 *NEWS.md
 fb3f23e8ab6a3a087c76cbae1ffdeaa2 *R/RcppExports.R
 4340988f85b45fef4a15d7b4599b04ed *R/annotate_functions.R
 1eb6ba511919d8525d3d790950422c5d *R/data-examples.R
 9a9ed32960c24d2624b01738c30e16af *R/graph_manipulate.R
 59677b2934b5f844a27b811ce361b7bd *R/graphlayouts.R
-2b67a86a17ad6264ca988221f01f38d1 *R/layout_backbone.R
+bdca7433486bea8c9f68f612eaaaa8b3 *R/layout_backbone.R
 e8398088b3a49915ee646d1381548a70 *R/layout_dynamic.R
 64daf167d130230d526b41747625ca6c *R/layout_large_graphs.R
 a066416274980316e90d81024abec853 *R/layout_manipulate.R
@@ -16,7 +16,7 @@ a066416274980316e90d81024abec853 *R/layout_manipulate.R
 9f4d786d187c368cee04c1f00f7ebce3 *R/layout_stress.R
 b0ae3589912bf55181e9c3f506983e1f *R/layout_umap.R
 38611f242af7097b207641117c0c2e28 *R/layouts.R
-76e20cab7a774b65377846daad5511ed *README.md
+162f0583d5500e0080bae83e764c0cad *README.md
 63d1a66bf223160d05eb5439f7eab2e6 *data/multilvl_ex.rda
 52d108a6c74855ae14726ae756b43716 *man/annotate_circle.Rd
 08e97b56eb291c26ca2e7fb8bff34899 *man/draw_circle.Rd

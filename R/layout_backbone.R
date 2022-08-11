@@ -26,6 +26,11 @@
 #'
 
 layout_as_backbone <- function(g,keep=0.2,backbone = TRUE){
+
+  if(igraph::ecount(g)==0){
+    stop("graph is empty")
+  }
+
   if(!requireNamespace("oaqc", quietly = TRUE)){
     stop("oaqc is needed for this function to work. Please install it.", call. = FALSE)
   }
@@ -38,6 +43,11 @@ layout_as_backbone <- function(g,keep=0.2,backbone = TRUE){
   if(any(igraph::is.loop(g))){
     stop("backbone layout does not work with loops.")
   }
+
+  if(any(igraph::components(g)$no>1)){
+    warning("input graph is disconnected. The algorithm works best on connected graphs and may lead to misleading results for graphs with disconnected components. Run the algorithm on each component separately and delete isolated nodes to mitigate this issue.")
+  }
+
   #weighting ----
   orbs <- oaqc::oaqc(igraph::get.edgelist(g,names = FALSE)-1, non_ind_freq = T)
   e11 <- orbs$e_orbits_non_ind[ ,11]
@@ -66,6 +76,11 @@ layout_as_backbone <- function(g,keep=0.2,backbone = TRUE){
   igraph::E(g)$bone <- w>=sort(w,decreasing=T)[ceiling(igraph::ecount(g) * keep)]
   g_bone <- igraph::graph_from_edgelist(el[igraph::E(g)$bone,1:2],directed = F)
   g_lay <- igraph::simplify(igraph::graph.union(g_umst,g_bone))
+  #if there is an issue with isolates (see #44)
+  if(igraph::vcount(g_lay)!=igraph::vcount(g)){
+    n_iso <- igraph::vcount(g) - igraph::vcount(g_lay)
+    g_lay <- igraph::add_vertices(g_lay,n_iso)
+  }
   if(backbone){
     bb <- backbone_edges(g,g_lay)
   } else {
