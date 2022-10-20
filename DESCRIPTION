@@ -1,6 +1,6 @@
 Package: graphlayouts
 Title: Additional Layout Algorithms for Network Visualizations
-Version: 0.8.2
+Version: 0.8.3
 Authors@R: person("David", "Schoch", email = "david@schochastics.net", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-2952-4812"))
 Description: Several new layout algorithms to visualize networks are provided which are not part of 'igraph'. 
@@ -18,8 +18,8 @@ Suggests: oaqc, testthat, ggraph, ggplot2, knitr, rmarkdown, uwot
 LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 7.2.1
 NeedsCompilation: yes
-Packaged: 2022-09-29 06:05:44 UTC; david
+Packaged: 2022-10-20 11:38:40 UTC; david
 Author: David Schoch [aut, cre] (<https://orcid.org/0000-0003-2952-4812>)
 Maintainer: David Schoch <david@schochastics.net>
 Repository: CRAN
-Date/Publication: 2022-09-29 15:10:02 UTC
+Date/Publication: 2022-10-20 12:35:08 UTC

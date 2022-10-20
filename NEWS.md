@@ -1,3 +1,8 @@
+# graphlayouts 0.8.3
+
+* fixed error for disconnected graphs with an explicit weights vector (#47)
+* added proper citation
+
 # graphlayouts 0.8.2
 
 * fixed error for very large graphs (#45)
