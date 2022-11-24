@@ -1,3 +1,8 @@
+# graphlayouts 0.8.4
+
+* added more unit tests
+* added package level description
+
 # graphlayouts 0.8.3
 
 * fixed error for disconnected graphs with an explicit weights vector (#47)
