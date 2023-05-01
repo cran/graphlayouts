@@ -10,7 +10,9 @@ status](https://www.r-pkg.org/badges/version/graphlayouts)](https://cran.r-proje
 [![Total
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/graphlayouts)](https://CRAN.R-project.org/package=graphlayouts)
 [![Codecov test
-coverage](https://codecov.io/gh/schochastics/graphlayouts/branch/master/graph/badge.svg)](https://app.codecov.io/gh/schochastics/graphlayouts?branch=master)
+coverage](https://codecov.io/gh/schochastics/graphlayouts/branch/main/graph/badge.svg)](https://app.codecov.io/gh/schochastics/graphlayouts?branch=main)
+[![Zenodo](https://zenodo.org/badge/DOI/10.5281/zenodo.7870213.svg)](https://doi.org/10.5281/zenodo.7870213)
+[![JOSS](https://joss.theoj.org/papers/10.21105/joss.05238/status.svg)](https://doi.org/10.21105/joss.05238)
 
 This package implements some graph layout algorithms that are not
 available in `igraph`.
@@ -138,6 +140,12 @@ ggraph(g,layout = "stress")+
 The backbone layout helps to uncover potential group structures based on
 edge embeddedness and puts more emphasis on this structure in the
 layout.
+
+To use the function, you need to install the package `oaqc`
+
+``` r
+install.packages("oaqc")
+```
 
 ``` r
 bb <- layout_as_backbone(g,keep=0.4)
@@ -267,24 +275,28 @@ is easy to track down specific nodes throughout time. Use `patchwork` to
 put the individual plots next to each other.
 
 ``` r
-library(patchwork)
-#gList is a list of longitudinal networks.
+#remotes::install_github("schochastics/networkdata")
+library(networkdata)
+#longitudinal dataset of friendships in a school class
+data("s50")
 
-xy <- layout_as_dynamic(gList,alpha = 0.2)
-pList <- vector("list",length(gList))
+xy <- layout_as_dynamic(s50,alpha = 0.2)
+pList <- vector("list",length(s50))
 
-for(i in 1:length(gList)){
-  pList[[i]] <- ggraph(gList[[i]],layout="manual",x=xy[[i]][,1],y=xy[[i]][,2])+
+for(i in seq_along(s50)){
+  pList[[i]] <- ggraph(s50[[i]],layout="manual",x=xy[[i]][,1],y=xy[[i]][,2])+
     geom_edge_link0(edge_width=0.6,edge_colour="grey66")+
-    geom_node_point(shape=21,aes(fill=smoking),size=3)+
+    geom_node_point(shape=21,aes(fill=as.factor(smoke)),size=3)+
     geom_node_text(aes(label=1:50),repel = T)+
-    scale_fill_manual(values=c("forestgreen","grey25","firebrick"),guide=ifelse(i!=2,FALSE,"legend"))+
+    scale_fill_manual(values=c("forestgreen","grey25","firebrick"),
+                      labels=c("no","occasional","regular"),
+                      name = "smoking",
+                      guide=ifelse(i!=2,"none","legend"))+
     theme_graph()+
     theme(legend.position="bottom")+
     labs(title=paste0("Wave ",i))
 }
-Reduce("+",pList)+
-  plot_annotation(title="Friendship network",theme = theme(title = element_text(family="Arial Narrow",face = "bold",size=16)))
+wrap_plots(pList)
 ```
 
 <img src="man/figures/dynamic_ex.png" width="80%" style="display: block; margin: auto;" />
@@ -295,3 +307,33 @@ The functions `layout_mirror()` and `layout_rotate()` can be used to
 manipulate an existing layout
 
 <img src="man/figures/layout_manipulation.png" width="80%" style="display: block; margin: auto;" />
+
+# How to reach out?
+
+### Where do I report bugs?
+
+Simply [open an
+issue](https://github.com/schochastics/graphlayouts/issues/new) on
+GitHub.
+
+### How do I contribute to the package?
+
+If you have an idea (but no code yet), [open an
+issue](https://github.com/schochastics/graphlayouts/issues/new) on
+GitHub. If you want to contribute with a specific feature and have the
+code ready, fork the repository, add your code, and create a pull
+request.
+
+### Do you need support?
+
+The easiest way is to [open an
+issue](https://github.com/schochastics/graphlayouts/issues/new) - this
+way, your question is also visible to others who may face similar
+problems.
+
+### Code of Conduct
+
+Please note that the graphlayouts project is released with a
+[Contributor Code of
+Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.

@@ -24,12 +24,16 @@
 #' xy[[1]]
 #' @export
 layout_as_dynamic <- function(gList,weights = NA, alpha = 0.5,iter = 500,tol = 1e-04){
+  if(igraph::is_igraph(gList)){
+    stop("'gList' must be a list of igraph objects.")
+  }
   check_networks <- vapply(gList,FUN = function(x) igraph::is_igraph(x),FUN.VALUE = FALSE)
   if(!all(check_networks)){
     stop("'gList' must be a list of igraph objects.")
   }
+
   #prepare reference layout
-  g <- Reduce("%u%",gList) #THIS HAS ERROR POTENTIAL IF IGRAPH NOT LOADED
+  g <- Reduce("%u%",gList)
   check_nodes <- vapply(gList,FUN = function(x) igraph::vcount(x)==igraph::vcount(g),FUN.VALUE = FALSE)
   if(!all(check_nodes)){
     stop("all nodes must be present in each network")
@@ -48,7 +52,7 @@ layout_as_dynamic <- function(gList,weights = NA, alpha = 0.5,iter = 500,tol = 1
   xref <- stress_major(xinit,W,Dmean,iter,tol)
 
   xycoords <-vector("list",length(gList))
-  for(i in 1:length(gList)){
+  for(i in seq_along(gList)){
     D <- DList[[i]]
     W <- 1/D^2
     diag(W) <- 0
@@ -66,7 +70,7 @@ adjust_dist <- function(DList){
   n <- nrow(DList[[1]])
   for(i in 1:n){
     for(j in 1:n){
-      for(k in 1:length(DList)){
+      for(k in seq_along(DList)){
         if(is.infinite(DList[[k]][i,j])){
           lastD <- Inf
           for(l in seq((k-1),1)){
