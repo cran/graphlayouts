@@ -1,3 +1,7 @@
+# graphlayouts 1.0.2
+
+* fixed bug with weighted disconnected graphs (#71) h/t @gi0na 
+
 # graphlayouts 1.0.1
 
 * removed the use of `%u%` (#70)

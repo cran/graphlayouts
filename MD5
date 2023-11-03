@@ -1,7 +1,7 @@
-0a0aa6cc505e50f5d5910d651b3c9004 *DESCRIPTION
+b50debe3d511173606b561e3ec93d638 *DESCRIPTION
 e7169b5a4594da18e5ad9ba2db89154d *LICENSE
 47e74767098802378d8e5d4db787a20d *NAMESPACE
-e7ed5894e304bdee8c293806b6e31657 *NEWS.md
+e08383e4ce6a8747ba739a97376ab82c *NEWS.md
 fb3f23e8ab6a3a087c76cbae1ffdeaa2 *R/RcppExports.R
 c468b1383f68cfe666b0132531a4af99 *R/annotate_functions.R
 1eb6ba511919d8525d3d790950422c5d *R/data-examples.R
@@ -13,16 +13,16 @@ b77c979c5be4a1043d41f99f115f63a3 *R/layout_backbone.R
 a02a9392144f3c27250a8c34ee59f184 *R/layout_manipulate.R
 36ef16749078d9adfd2aec55e44db3a0 *R/layout_multilevel.R
 9d202d961a27ae8d09cc402a73025fc4 *R/layout_spectral.R
-fb2d408892e461a9bf56dcff9fe50f00 *R/layout_stress.R
+6833d47f82da2b43f5f10cacb74031bc *R/layout_stress.R
 e7da81060eb9eecb96e0d9e31756df44 *R/layout_umap.R
 23edcee690a22f2274da2e489e4d67e2 *R/layouts.R
 8af13abd273ca6241e1e44081e52f177 *README.md
 5af65facf43fa7666e73598b3144ad24 *build/vignette.rds
 63d1a66bf223160d05eb5439f7eab2e6 *data/multilvl_ex.rda
 be806a18b6d85246129bf0291870ecdd *inst/CITATION
-13b2d5aa1ea081c144f9e8f082968186 *inst/doc/graphlayouts.R
+45a0bbe096c9d9d46e6f2f065871aefd *inst/doc/graphlayouts.R
 e86cb59c1e93721cde5a5ceed6569f6f *inst/doc/graphlayouts.Rmd
-2b549df7eb11ed1e9db6dc4138ef9468 *inst/doc/graphlayouts.html
+5e1cd96473d601bd123e1024b7ed4858 *inst/doc/graphlayouts.html
 9488084ec2b1d047cc5c0a187677ae23 *man/annotate_circle.Rd
 08e97b56eb291c26ca2e7fb8bff34899 *man/draw_circle.Rd
 3a43960e417bb2b1670df6cc537654b6 *man/figures/README-backbone-1.png
@@ -75,6 +75,6 @@ bb6fad4b8503c82666bf4ccf257aab22 *tests/testthat/test-layout_large_graphs.R
 1ed9a0459740106fd56ead99df031213 *tests/testthat/test-layout_spectral.R
 2e9b344f15b151e645d7d40bc0df6026 *tests/testthat/test-layouts.R
 8d450307e3ff84437ae61d61c10e9336 *tests/testthat/test-misc.R
-ce73bcd57eb4eaee68624ea4f67ae4c3 *tests/testthat/test-stress_majorization.R
+064fff4b99143fb205d1220581973e52 *tests/testthat/test-stress_majorization.R
 e86cb59c1e93721cde5a5ceed6569f6f *vignettes/graphlayouts.Rmd
 ae6d90e38a0a130bdc35763e6ecdaa0e *vignettes/layout_manipulation.png
