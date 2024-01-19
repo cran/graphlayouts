@@ -1,3 +1,14 @@
+# graphlayouts 1.1.0
+
+# graphlayouts 1.0.2.9000
+
+* `layout_with_constrained_stress()` and `layout_with_constrained_stress3D()`
+  work for disconnected graphs
+* internal code refactoring
+* added `layout_as_metromap()`
+* added `layout_with_fixed_coords()`
+* removed deprecated igraph calls
+
 # graphlayouts 1.0.2
 
 * fixed bug with weighted disconnected graphs (#71) h/t @gi0na 

@@ -40,6 +40,22 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// fixed_stress_major
+NumericMatrix fixed_stress_major(NumericMatrix y, NumericMatrix fixedCoords, NumericMatrix W, NumericMatrix D, int iter, double tol);
+RcppExport SEXP _graphlayouts_fixed_stress_major(SEXP ySEXP, SEXP fixedCoordsSEXP, SEXP WSEXP, SEXP DSEXP, SEXP iterSEXP, SEXP tolSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type y(ySEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type fixedCoords(fixedCoordsSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type W(WSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type D(DSEXP);
+    Rcpp::traits::input_parameter< int >::type iter(iterSEXP);
+    Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
+    rcpp_result_gen = Rcpp::wrap(fixed_stress_major(y, fixedCoords, W, D, iter, tol));
+    return rcpp_result_gen;
+END_RCPP
+}
 // constrained_stress3D
 double constrained_stress3D(NumericMatrix x, NumericMatrix W, NumericMatrix D);
 RcppExport SEXP _graphlayouts_constrained_stress3D(SEXP xSEXP, SEXP WSEXP, SEXP DSEXP) {
@@ -66,6 +82,84 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type iter(iterSEXP);
     Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
     rcpp_result_gen = Rcpp::wrap(constrained_stress_major3D(y, dim, W, D, iter, tol));
+    return rcpp_result_gen;
+END_RCPP
+}
+// criterion_angular_resolution
+double criterion_angular_resolution(List adj, NumericMatrix xy);
+RcppExport SEXP _graphlayouts_criterion_angular_resolution(SEXP adjSEXP, SEXP xySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type adj(adjSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type xy(xySEXP);
+    rcpp_result_gen = Rcpp::wrap(criterion_angular_resolution(adj, xy));
+    return rcpp_result_gen;
+END_RCPP
+}
+// criterion_edge_length
+double criterion_edge_length(IntegerMatrix el, NumericMatrix xy, double lg);
+RcppExport SEXP _graphlayouts_criterion_edge_length(SEXP elSEXP, SEXP xySEXP, SEXP lgSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type el(elSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type xy(xySEXP);
+    Rcpp::traits::input_parameter< double >::type lg(lgSEXP);
+    rcpp_result_gen = Rcpp::wrap(criterion_edge_length(el, xy, lg));
+    return rcpp_result_gen;
+END_RCPP
+}
+// criterion_balanced_edge_length
+double criterion_balanced_edge_length(List adj_deg2, NumericMatrix xy);
+RcppExport SEXP _graphlayouts_criterion_balanced_edge_length(SEXP adj_deg2SEXP, SEXP xySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type adj_deg2(adj_deg2SEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type xy(xySEXP);
+    rcpp_result_gen = Rcpp::wrap(criterion_balanced_edge_length(adj_deg2, xy));
+    return rcpp_result_gen;
+END_RCPP
+}
+// criterion_line_straightness
+double criterion_line_straightness();
+RcppExport SEXP _graphlayouts_criterion_line_straightness() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(criterion_line_straightness());
+    return rcpp_result_gen;
+END_RCPP
+}
+// criterion_octilinearity
+double criterion_octilinearity(IntegerMatrix el, NumericMatrix xy);
+RcppExport SEXP _graphlayouts_criterion_octilinearity(SEXP elSEXP, SEXP xySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type el(elSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type xy(xySEXP);
+    rcpp_result_gen = Rcpp::wrap(criterion_octilinearity(el, xy));
+    return rcpp_result_gen;
+END_RCPP
+}
+// layout_as_metro_iter
+NumericMatrix layout_as_metro_iter(List adj, IntegerMatrix el, List adj_deg2, NumericMatrix xy, NumericMatrix bbox, double l, double gr, NumericVector w, double bsize);
+RcppExport SEXP _graphlayouts_layout_as_metro_iter(SEXP adjSEXP, SEXP elSEXP, SEXP adj_deg2SEXP, SEXP xySEXP, SEXP bboxSEXP, SEXP lSEXP, SEXP grSEXP, SEXP wSEXP, SEXP bsizeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type adj(adjSEXP);
+    Rcpp::traits::input_parameter< IntegerMatrix >::type el(elSEXP);
+    Rcpp::traits::input_parameter< List >::type adj_deg2(adj_deg2SEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type xy(xySEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type bbox(bboxSEXP);
+    Rcpp::traits::input_parameter< double >::type l(lSEXP);
+    Rcpp::traits::input_parameter< double >::type gr(grSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type w(wSEXP);
+    Rcpp::traits::input_parameter< double >::type bsize(bsizeSEXP);
+    rcpp_result_gen = Rcpp::wrap(layout_as_metro_iter(adj, el, adj_deg2, xy, bbox, l, gr, w, bsize));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -189,8 +283,15 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_graphlayouts_constrained_stress", (DL_FUNC) &_graphlayouts_constrained_stress, 3},
     {"_graphlayouts_constrained_stress_major", (DL_FUNC) &_graphlayouts_constrained_stress_major, 6},
+    {"_graphlayouts_fixed_stress_major", (DL_FUNC) &_graphlayouts_fixed_stress_major, 6},
     {"_graphlayouts_constrained_stress3D", (DL_FUNC) &_graphlayouts_constrained_stress3D, 3},
     {"_graphlayouts_constrained_stress_major3D", (DL_FUNC) &_graphlayouts_constrained_stress_major3D, 6},
+    {"_graphlayouts_criterion_angular_resolution", (DL_FUNC) &_graphlayouts_criterion_angular_resolution, 2},
+    {"_graphlayouts_criterion_edge_length", (DL_FUNC) &_graphlayouts_criterion_edge_length, 3},
+    {"_graphlayouts_criterion_balanced_edge_length", (DL_FUNC) &_graphlayouts_criterion_balanced_edge_length, 2},
+    {"_graphlayouts_criterion_line_straightness", (DL_FUNC) &_graphlayouts_criterion_line_straightness, 0},
+    {"_graphlayouts_criterion_octilinearity", (DL_FUNC) &_graphlayouts_criterion_octilinearity, 2},
+    {"_graphlayouts_layout_as_metro_iter", (DL_FUNC) &_graphlayouts_layout_as_metro_iter, 9},
     {"_graphlayouts_reweighting", (DL_FUNC) &_graphlayouts_reweighting, 2},
     {"_graphlayouts_sparseStress", (DL_FUNC) &_graphlayouts_sparseStress, 6},
     {"_graphlayouts_stress", (DL_FUNC) &_graphlayouts_stress, 3},

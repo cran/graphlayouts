@@ -9,12 +9,40 @@ constrained_stress_major <- function(y, dim, W, D, iter, tol) {
     .Call(`_graphlayouts_constrained_stress_major`, y, dim, W, D, iter, tol)
 }
 
+fixed_stress_major <- function(y, fixedCoords, W, D, iter, tol) {
+    .Call(`_graphlayouts_fixed_stress_major`, y, fixedCoords, W, D, iter, tol)
+}
+
 constrained_stress3D <- function(x, W, D) {
     .Call(`_graphlayouts_constrained_stress3D`, x, W, D)
 }
 
 constrained_stress_major3D <- function(y, dim, W, D, iter, tol) {
     .Call(`_graphlayouts_constrained_stress_major3D`, y, dim, W, D, iter, tol)
+}
+
+criterion_angular_resolution <- function(adj, xy) {
+    .Call(`_graphlayouts_criterion_angular_resolution`, adj, xy)
+}
+
+criterion_edge_length <- function(el, xy, lg) {
+    .Call(`_graphlayouts_criterion_edge_length`, el, xy, lg)
+}
+
+criterion_balanced_edge_length <- function(adj_deg2, xy) {
+    .Call(`_graphlayouts_criterion_balanced_edge_length`, adj_deg2, xy)
+}
+
+criterion_line_straightness <- function() {
+    .Call(`_graphlayouts_criterion_line_straightness`)
+}
+
+criterion_octilinearity <- function(el, xy) {
+    .Call(`_graphlayouts_criterion_octilinearity`, el, xy)
+}
+
+layout_as_metro_iter <- function(adj, el, adj_deg2, xy, bbox, l, gr, w, bsize) {
+    .Call(`_graphlayouts_layout_as_metro_iter`, adj, el, adj_deg2, xy, bbox, l, gr, w, bsize)
 }
 
 reweighting <- function(el, N_ranks) {
