@@ -1,7 +1,7 @@
-1d830f041f6a1adf251d7916d42f1c6b *DESCRIPTION
+99cbc0af6e83f36123858cf3c095156b *DESCRIPTION
 e7169b5a4594da18e5ad9ba2db89154d *LICENSE
 4cd20682aab2b1c8ad5d626bd096684c *NAMESPACE
-c6a7ddf99e2c92f8d20798fd343aa65a *NEWS.md
+ea8abb170640e896c5504835b5a3c247 *NEWS.md
 ce6b8bd06b8d0a51431241645ba9afb5 *R/RcppExports.R
 c468b1383f68cfe666b0132531a4af99 *R/annotate_functions.R
 0c614accab28c774c38f845e887bb744 *R/data-examples.R
@@ -13,7 +13,7 @@ fa88d8ae1e7394af2aac4aa1b3553464 *R/layout_large_graphs.R
 a02a9392144f3c27250a8c34ee59f184 *R/layout_manipulate.R
 125da3a3864e7cac2a89c356019e73ce *R/layout_multilevel.R
 f14b72867094a1596beaaf933a257fe7 *R/layout_spectral.R
-1011f296b6bcfb5f40521aa8c5bfcd87 *R/layout_stress.R
+edbda88287d030c45ce7a9e5cdc2acfa *R/layout_stress.R
 16bf2c4aac3c33902f9409c0410e5a23 *R/layout_umap.R
 d5bf5a4fff994df26e21e54f81e4eeb6 *R/layouts.R
 2db541d1c5aaecd33753dbc82820501c *R/metro_multicriteria.R
@@ -25,7 +25,7 @@ d2ef2e8d8782f5c11eeab48032974777 *R/utils.R
 be806a18b6d85246129bf0291870ecdd *inst/CITATION
 45a0bbe096c9d9d46e6f2f065871aefd *inst/doc/graphlayouts.R
 e86cb59c1e93721cde5a5ceed6569f6f *inst/doc/graphlayouts.Rmd
-5e1cd96473d601bd123e1024b7ed4858 *inst/doc/graphlayouts.html
+2e18296fd0b8fc1402a8744d727b4812 *inst/doc/graphlayouts.html
 9488084ec2b1d047cc5c0a187677ae23 *man/annotate_circle.Rd
 08e97b56eb291c26ca2e7fb8bff34899 *man/draw_circle.Rd
 3a43960e417bb2b1670df6cc537654b6 *man/figures/README-backbone-1.png
