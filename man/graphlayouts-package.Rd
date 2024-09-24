@@ -23,7 +23,7 @@ Some features of the package are:
 \item \code{layout_as_dynamic()} for longitudinal network data
 }
 
-A detailed tutorial can be found at \url{https://www.mr.schochastics.net/material/netVizR/}
+A detailed tutorial can be found at \url{https://schochastics.github.io/netVizR/}
 }
 \seealso{
 Useful links:
@@ -36,6 +36,12 @@ Useful links:
 }
 \author{
 \strong{Maintainer}: David Schoch \email{david@schochastics.net} (\href{https://orcid.org/0000-0003-2952-4812}{ORCID})
+
+Other contributors:
+\itemize{
+  \item Mark Ortmann (author of R package oaqc) [contributor]
+  \item Felix Schoenenberger (author of R package oaqc) [contributor]
+}
 
 }
 \keyword{internal}
