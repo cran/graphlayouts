@@ -1,3 +1,7 @@
+# graphlayouts 1.2.1
+
+* moves oaqc back to suggested packages and removed ported code
+
 # graphlayouts 1.2.0
 
 * ported relevant code from archived R package oaqc (#83)
