@@ -32,7 +32,7 @@
 #' @examples
 #' library(igraph)
 #' data("multilvl_ex")
-#'
+#'\dontrun{
 #' # compute a layout for the whole network
 #' xy <- layout_as_multilevel(multilvl_ex, type = "all", alpha = 25, beta = 45)
 #'
@@ -43,13 +43,14 @@
 #'     FUN2 = layout_with_stress,
 #'     alpha = 25, beta = 45
 #' )
-#'
+#' }
 #' @export
 layout_as_multilevel <- function(g, type = "all", FUN1, FUN2,
                                  params1 = NULL, params2 = NULL,
                                  ignore_iso = TRUE,
                                  project2D = TRUE,
                                  alpha = 35, beta = 45) {
+    
     type <- match.arg(type, c("all", "separate", "fix1", "fix2"))
 
     if (!"lvl" %in% igraph::vertex_attr_names(g)) {
@@ -101,7 +102,7 @@ layout_as_multilevel <- function(g, type = "all", FUN1, FUN2,
             formals(FUN2)[names(params2)] <- params2
             xy2 <- FUN2(g2)
         }
-        if (typeof(xy1) == "list") {
+        if (typeof(xy2) == "list") {
             xy2 <- xy2$xy
         }
         xyz <- cbind(0, igraph::V(g)$lvl, 0)
